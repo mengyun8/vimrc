@@ -1,0 +1,143 @@
+
+set fileencoding=utf-8
+
+set nocompatible              " be iMproved, required
+filetype on
+let g:go_fmt_command = "goimports"
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+"Plugin 'Valloric/YouCompleteMe'
+
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+" let Vundle manage Vundle
+" required! 
+Bundle 'scrooloose/nerdtree'
+Bundle 'klen/python-mode'
+Bundle 'davidhalter/jedi-vim'
+Bundle 'wincent/Command-T'
+Bundle 'jnwhiteh/vim-golang'
+Bundle 'hynek/vim-python-pep8-indent'
+Bundle 'ervandew/supertab'
+Bundle 'yann2192/vim-colorschemes'
+Bundle 'yann2192/vim-vitamins'
+Bundle 'majutsushi/tagbar'
+
+" All of your Plugins must be added before the following line
+
+call vundle#end()            " required
+
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+set ruler                   " show the cursor position all the time
+set nostartofline           " Avoid moving cursor to BOL when jumping around
+set virtualedit=block       " Let cursor move past the last char in <C-v> mode
+set scrolloff=3             " Keep 3 context lines above and below the cursor
+set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
+set showmatch               " Briefly jump to a paren once it's balanced
+set nowrap                  " don't wrap text
+set linebreak               " don't wrap textin the middle of a word
+set autoindent              " always set autoindenting on
+set smartindent             " use smart indent if there is no indent file
+set tabstop=4               " <tab> inserts 4 spaces
+set shiftwidth=4            " but an indent level is 2 spaces wide.
+set softtabstop=4           " <BS> over an autoindent deletes both spaces.
+set expandtab               " Use spaces, not tabs, for autoindent/tab key.
+set shiftround              " rounds indent to a multiple of shiftwidth
+set matchpairs+=<:>         " show matching <> (html mainly) as well
+set foldmethod=indent       " allow us to fold on indents
+set foldlevel=99            " don't fold by default
+
+set nu
+
+
+"""" Reading/Writing
+set noautowrite             " Never write a file unless I request it.
+set noautowriteall          " NEVER.
+set noautoread              " Don't automatically re-read changed files.
+set modeline                " Allow vim options to be embedded in files;
+set modelines=5             " they must be within the first or last 5 lines.
+set ffs=unix,dos,mac        " Try recognizing dos, unix, and mac line endings.
+
+"""" Messages, Info, Status
+set ls=2                    " allways show status line
+set vb t_vb=                " Disable all bells.  I hate ringing/flashing.
+set confirm                 " Y-N-C prompt if closing with unsaved changes.
+set showcmd                 " Show incomplete normal mode commands as I type.
+set report=0                " : commands always print changed line count.
+set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
+set ruler                   " Show some info, even without statuslines.
+set laststatus=2            " Always show statusline, even if only 1 window.
+set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
+
+" displays tabs with :set list & displays when a line runs off-screen
+"set listchars=tab:>-,eol:$,trail:-,precedes:<,extends:>
+"set listchars=tab:>-,trail:-,precedes:<,extends:>
+"set list                   " caractere $ en fin de ligne
+
+""" Searching and Patterns
+set ignorecase              " Default to using case insensitive searches,
+set smartcase               " unless uppercase letters are used in the regex.
+set smarttab                " Handle tabs more intelligently
+set hlsearch                " Highlight searches by default.
+set incsearch               " Incrementally search while typing a /regex
+
+"set colorcolumn=128
+":autocmd InsertEnter * set cul
+":autocmd InsertLeave * set nocul
+
+
+"let Tlist_Ctags_Cmd='ctags'
+"let Tlist_Show_One_File=1
+"let Tlist_WinWidt=30
+"let Tlist_Auto_Open=1
+"let Tlist_Use_Right_Windows=1
+"let Tlist_Exit_OnlyWindow=1
+"map <silent> <F8> :TlistToggle<cr>
+
+
+" for tagbar plugin
+"设置tagbar使用的ctags的插件,必须要设置对，这一步也不一定，安装ctags时会自动加环境变量
+"let g:tagbar_ctags_bin='/usr/bin/ctags'
+let g:tagbar_width=30   "设置tagbar的窗口宽度
+let g:tagbar_right=1    "设置tagbar的窗口显示在右侧，其它默认也是在右侧
+let g:tagbar_sort = 1   "设置标签不排序，默认排序
+let g:tagbar_autoopen=1
+
+"打开文件自动 打开tagbar
+autocmd BufReadPost *.go,*.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.java call tagbar#autoopen()
+map <F8> :TagbarToggle<CR>   " F8打开Tagbar
+
+map <F7> :NERDTreeToggle<CR>
+
+syntax on
+
+autocmd VimEnter * NERDTree
